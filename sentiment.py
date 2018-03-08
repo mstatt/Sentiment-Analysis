@@ -29,11 +29,10 @@ def entities(text):
     # Breaks down stream into identified entities
     return nltk.pos_tag(word_tokenize(text))
 
+
 #Set length of word combinations for use in counters.
-dEntities = {}
 filesentiment = {}
 corpus = []
-entities_list = []
 file_list = []
 os.chdir(compdir)
 print("Loading corpus......")
@@ -43,23 +42,18 @@ for file in glob.glob("*.txt"):
     f = open(file)
     txtstream = f.read()
     txtstream2 = remove_punctuation(txtstream)
-    corpus.append(txtstream)
+    corpus.append(entities(txtstream))
     filesentiment.update({file : sid.polarity_scores(txtstream2)})
-    dEntities.update({file : entities(txtstream)})
-    entities_list.append(entities(txtstream))
     f.close()
 
-
+print("Creating Dataframe......")
 ods = collections.OrderedDict(filesentiment.items())
 dfSentiment = pd.DataFrame.from_dict(ods, orient='index').reset_index()
-dfSentiment = dfSentiment.rename(columns={'index':'Files Analyzed', 0:'neg', 0:'neu', 0:'pos', 0:'compound'})
-dfSentiment.sort_values(["compound"], inplace=True, ascending=False)
-dfSentiment.at['Averages', 'neg'] = dfSentiment['neg'].mean()
-dfSentiment.at['Averages', 'neu'] = dfSentiment['neu'].mean()
-dfSentiment.at['Averages', 'pos'] = dfSentiment['pos'].mean()
-SentScore = dfSentiment['compound'].mean()
-dfSentiment.at['Averages', 'compound'] = SentScore
-
-
+dfSentiment = dfSentiment.rename(columns={'index':'Files Analyzed', 'pos':'Positive', 'neu':'Neutral' ,'neg':'Negative'})
+dfSentiment = dfSentiment.drop('compound', 1)
+dfSentiment = dfSentiment[['Files Analyzed', 'Positive', 'Neutral' ,'Negative']]
+dfSentiment['Score'] = (dfSentiment['Positive'] + dfSentiment['Neutral']) - dfSentiment['Negative']
+dfSentiment.sort_values(["Score"], inplace=True, ascending=False)
+print("Writing output......")
 os.chdir('..')
 dfSentiment.to_html(open(sentimenthtml, 'w'))
