@@ -6,10 +6,7 @@ import nltk
 import itertools
 import collections
 import pandas as pd
-from math import log
-from nltk import ngrams
 from collections import Counter
-from nltk.tokenize import word_tokenize
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 
@@ -25,24 +22,15 @@ def remove_punctuation(text):
         text = text.replace(sign, " ").lower()
     return text
 
-def entities(text):
-    # Breaks down stream into identified entities
-    return nltk.pos_tag(word_tokenize(text))
-
-
 #Set length of word combinations for use in counters.
 filesentiment = {}
-corpus = []
-file_list = []
 os.chdir(compdir)
-print("Loading corpus......")
+print("Loading dictionary......")
 #Get all files in the directory loaded into the corpus
 for file in glob.glob("*.txt"):
-    file_list.append(file)
     f = open(file)
     txtstream = f.read()
     txtstream2 = remove_punctuation(txtstream)
-    corpus.append(entities(txtstream))
     filesentiment.update({file : sid.polarity_scores(txtstream2)})
     f.close()
 
