@@ -38,5 +38,13 @@ The results will look like the example below:
       <td>0.016</td>
       <td>0.116</td>
     </tr>
+    <tr>
+      <th>2</th>
+      <td>filename3.txt</td>
+      <td>0.000</td>
+      <td>0.571</td>
+      <td>0.429</td>
+      <td>-0.429</td>
+    </tr>
   </tbody>
 </table>
