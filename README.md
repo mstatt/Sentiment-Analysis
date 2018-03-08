@@ -31,12 +31,12 @@ The results will look like the example below:
       <td>0.135</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>1</th>
       <td>filename2.txt</td>
-      <td>0.000</td>
-      <td>1.000</td>
-      <td>0.000</td>
-      <td>0.000</td>
+      <td>0.132</td>
+      <td>0.852</td>
+      <td>0.016</td>
+      <td>0.116</td>
     </tr>
   </tbody>
 </table>
