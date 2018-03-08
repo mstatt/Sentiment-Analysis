@@ -2,10 +2,9 @@
 
 Basic sentiment analysis useing Vader.
 
-1) Reads a directory(forprocessing) and generates a file list.
-2) Reads the files into a corpus.
-3) Removes punctuation
-4) Runs the sentiment analysis 
-5) Tokenizes the text stream
-6) Converts the Sentiment dictionary into a dataframe
-7) Writes the output to an html file.()
+
+1) Reads the files from "froprocessing/" individually into a string.
+2) Removes punctuation
+3) Runs the sentiment analysis loading the dictionary
+4) Converts the Sentiment dictionary into a dataframe
+5) Writes the output to an html file.
